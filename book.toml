@@ -43,4 +43,4 @@ output-mode = "default"
 # [output.linkcheck]
 
 [rust]
-edition = "2021"
+edition = "2024"

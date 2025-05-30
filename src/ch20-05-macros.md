@@ -497,6 +497,8 @@ This definition is similar to the custom `derive` macro’s signature: we receiv
 the tokens that are inside the parentheses and return the code we wanted to
 generate.
 
+{{#quiz ../quizzes/ch19-06-macros.toml}}
+
 ## Summary
 
 Whew! Now you have some Rust features in your toolbox that you likely won’t use

@@ -171,6 +171,8 @@ Types”][using-trait-objects-that-allow-for-values-of-different-types]<!-- igno
 
 Next, let’s look at macros!
 
+{{#quiz ../quizzes/ch19-05-advanced-functions-and-closures.toml}}
+
 [advanced-traits]: ch20-02-advanced-traits.html#advanced-traits
 [enum-values]: ch06-01-defining-an-enum.html#enum-values
 [closure-types]: ch13-01-closures.html#closure-type-inference-and-annotation
