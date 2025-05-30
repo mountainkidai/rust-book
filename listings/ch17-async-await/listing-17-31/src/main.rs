@@ -1,7 +1,6 @@
 extern crate trpl; // required for mdbook test
 
-// ANCHOR: add-StreamExt-trait
-
+// ANCHOR: all
 use trpl::StreamExt;
 
 fn main() {
@@ -15,5 +14,4 @@ fn main() {
         }
     });
 }
-
-// ANCHOR_END: add-StreamExt-trait
+// ANCHOR_END: all

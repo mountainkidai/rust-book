@@ -1,7 +1,6 @@
 extern crate trpl; // required for mdbook test
 
-// ANCHOR: filter-out-except-3-and-5
-
+// ANCHOR: all
 use trpl::StreamExt;
 
 fn main() {
@@ -18,4 +17,4 @@ fn main() {
         }
     });
 }
-// ANCHOR_END: filter-out-except-3-and-5
+// ANCHOR_END: all

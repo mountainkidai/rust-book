@@ -11,8 +11,8 @@ An `if` expression allows you to branch your code depending on conditions. You
 provide a condition and then state, “If this condition is met, run this block
 of code. If the condition is not met, do not run this block of code.”
 
-Create a new project called *branches* in your *projects* directory to explore
-the `if` expression. In the *src/main.rs* file, input the following:
+Create a new project called _branches_ in your _projects_ directory to explore
+the `if` expression. In the _src/main.rs_ file, input the following:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -24,7 +24,7 @@ All `if` expressions start with the keyword `if`, followed by a condition. In
 this case, the condition checks whether or not the variable `number` has a
 value less than 5. We place the block of code to execute if the condition is
 `true` immediately after the condition inside curly brackets. Blocks of code
-associated with the conditions in `if` expressions are sometimes called *arms*,
+associated with the conditions in `if` expressions are sometimes called _arms_,
 just like the arms in `match` expressions that we discussed in the [“Comparing
 the Guess to the Secret Number”][comparing-the-guess-to-the-secret-number]<!--
 ignore --> section of Chapter 2.
@@ -54,7 +54,7 @@ Run the program again, and look at the output:
 {{#include ../listings/ch03-common-programming-concepts/no-listing-27-if-false/output.txt}}
 ```
 
-It’s also worth noting that the condition in this code *must* be a `bool`. If
+It’s also worth noting that the condition in this code _must_ be a `bool`. If
 the condition isn’t a `bool`, we’ll get an error. For example, try running the
 following code:
 
@@ -171,9 +171,9 @@ if it had to keep track of multiple hypothetical types for any variable.
 ### Repetition with Loops
 
 It’s often useful to execute a block of code more than once. For this task,
-Rust provides several *loops*, which will run through the code inside the loop
+Rust provides several _loops_, which will run through the code inside the loop
 body to the end and then start immediately back at the beginning. To experiment
-with loops, let’s make a new project called *loops*.
+with loops, let’s make a new project called _loops_.
 
 Rust has three kinds of loops: `loop`, `while`, and `for`. Let’s try each one.
 
@@ -182,7 +182,7 @@ Rust has three kinds of loops: `loop`, `while`, and `for`. Let’s try each one.
 The `loop` keyword tells Rust to execute a block of code over and over again
 forever or until you explicitly tell it to stop.
 
-As an example, change the *src/main.rs* file in your *loops* directory to look
+As an example, change the _src/main.rs_ file in your _loops_ directory to look
 like this:
 
 <span class="filename">Filename: src/main.rs</span>
@@ -205,7 +205,7 @@ CTRL-C
 ```console
 $ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.29s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
      Running `target/debug/loops`
 again!
 again!
@@ -214,9 +214,10 @@ again!
 ^Cagain!
 ```
 
-The symbol `^C` represents where you pressed <kbd>ctrl</kbd>-<kbd>c</kbd>. You
-may or may not see the word `again!` printed after the `^C`, depending on where
-the code was in the loop when it received the interrupt signal.
+The symbol `^C` represents where you pressed <kbd>ctrl</kbd>-<kbd>c</kbd>.
+
+You may or may not see the word `again!` printed after the `^C`, depending on
+where the code was in the loop when it received the interrupt signal.
 
 Fortunately, Rust also provides a way to break out of a loop using code. You
 can place the `break` keyword within the loop to tell the program when to stop
@@ -261,7 +262,7 @@ loop, `return` always exits the current function.
 #### Loop Labels to Disambiguate Between Multiple Loops
 
 If you have loops within loops, `break` and `continue` apply to the innermost
-loop at that point. You can optionally specify a *loop label* on a loop that
+loop at that point. You can optionally specify a _loop label_ on a loop that
 you can then use with `break` or `continue` to specify that those keywords
 apply to the labeled loop instead of the innermost loop. Loop labels must begin
 with a single quote. Here’s an example with two nested loops:
@@ -290,7 +291,7 @@ that Rust has a built-in language construct for it, called a `while` loop. In
 Listing 3-3, we use `while` to loop the program three times, counting down each
 time, and then, after the loop, print a message and exit.
 
-<Listing number="3-3" file-name="src/main.rs" caption="Using a `while` loop to run code while a condition holds true">
+<Listing number="3-3" file-name="src/main.rs" caption="Using a `while` loop to run code while a condition evaluates to `true`">
 
 ```rust
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-03/src/main.rs}}
@@ -350,7 +351,9 @@ for each item in a collection. A `for` loop looks like the code in Listing 3-5.
 When we run this code, we’ll see the same output as in Listing 3-4. More
 importantly, we’ve now increased the safety of the code and eliminated the
 chance of bugs that might result from going beyond the end of the array or not
-going far enough and missing some items.
+going far enough and missing some items. Machine code generated from `for`
+loops can be more efficient as well, because the index doesn’t need to be
+compared to the length of the array at every iteration.
 
 Using the `for` loop, you wouldn’t need to remember to change any other code if
 you changed the number of values in the array, as you would with the method
@@ -384,15 +387,13 @@ and compound data types, functions, comments, `if` expressions, and loops! To
 practice with the concepts discussed in this chapter, try building programs to
 do the following:
 
-* Convert temperatures between Fahrenheit and Celsius.
-* Generate the *n*th Fibonacci number.
-* Print the lyrics to the Christmas carol “The Twelve Days of Christmas,”
+- Convert temperatures between Fahrenheit and Celsius.
+- Generate the *n*th Fibonacci number.
+- Print the lyrics to the Christmas carol “The Twelve Days of Christmas,”
   taking advantage of the repetition in the song.
 
-When you’re ready to move on, we’ll talk about a concept in Rust that *doesn’t*
+When you’re ready to move on, we’ll talk about a concept in Rust that _doesn’t_
 commonly exist in other programming languages: ownership.
 
-[comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
-[quitting-after-a-correct-guess]:
-ch02-00-guessing-game-tutorial.html#quitting-after-a-correct-guess
+[comparing-the-guess-to-the-secret-number]: ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
+[quitting-after-a-correct-guess]: ch02-00-guessing-game-tutorial.html#quitting-after-a-correct-guess
