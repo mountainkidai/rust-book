@@ -552,7 +552,7 @@ Rust’s official guide to the subject, the [Rustonomicon][nomicon].
 [ABI]: ../reference/items/external-blocks.html#abi
 [differences-between-variables-and-constants]: ch03-01-variables-and-mutability.html#constants
 [extensible-concurrency-with-the-sync-and-send-traits]: ch16-04-extensible-concurrency-sync-and-send.html#extensible-concurrency-with-the-sync-and-send-traits
-[the-slice-type]: ch04-03-slices.html#the-slice-type
+[the-slice-type]: ch04-04-slices.html#the-slice-type
 [unions]: ../reference/items/unions.html
 [miri]: https://github.com/rust-lang/miri
 [editions]: appendix-05-editions.html
