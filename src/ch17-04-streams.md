@@ -446,5 +446,7 @@ Now that we’ve seen a bunch of async in practice, let’s take a step back and
 into a few of the details of how `Future`, `Stream`, and the other key traits
 Rust uses to make async work.
 
+{{#quiz ../quizzes/async-04-streams.toml}}
+
 [17-02-messages]: ch17-02-concurrency-with-async.html#message-passing
 [iterator-trait]: ch13-02-iterators.html#the-iterator-trait-and-the-next-method

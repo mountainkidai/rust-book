@@ -399,6 +399,8 @@ received 'you'
 This is a good start, but it limits us to just a handful of futures: two with
 `join`, or three with `join3`. Let’s see how we might work with more futures.
 
+{{#quiz ../quizzes/async-02-concurrency-with-async.toml}}
+
 [thread-spawn]: ch16-01-threads.html#creating-a-new-thread-with-spawn
 [join-handles]: ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handles
 [message-passing-threads]: ch16-02-message-passing.html

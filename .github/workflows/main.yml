@@ -76,7 +76,7 @@ jobs:
     - name: Run `mdbook-trpl` package tests
       working-directory: packages/mdbook-trpl
       run: |
-        cargo test
+        RUST_LIB_BACKTRACE=0 cargo test
 
     - name: Install mdbook-trpl binaries
       run: cargo install --path packages/mdbook-trpl

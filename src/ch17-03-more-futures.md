@@ -590,6 +590,8 @@ to consider first, though:
   the fact that it’s from the `stream` part of the crate; it works just fine
   with any collection of futures.)
 
+{{#quiz ../quizzes/async-03-more-futures.toml}}
+
 [dyn]: ch12-03-improving-error-handling-and-modularity.html
 [enum-alt]: ch08-01-vectors.html#using-an-enum-to-store-multiple-types
 [async-program]: ch17-01-futures-and-syntax.html#our-first-async-program

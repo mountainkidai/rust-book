@@ -482,6 +482,8 @@ That’s all we’re going to cover for the lower-level details on these traits.
 wrap up, let’s consider how futures (including streams), tasks, and threads all
 fit together!
 
+{{#quiz ../quizzes/async-05-traits-for-async.toml}}
+
 [ch-18]: ch18-00-oop.html
 [async-book]: https://rust-lang.github.io/async-book/
 [under-the-hood]: https://rust-lang.github.io/async-book/02_execution/01_chapter.html

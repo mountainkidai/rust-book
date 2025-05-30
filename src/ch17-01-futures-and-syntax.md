@@ -382,6 +382,8 @@ others, while in other cases the faster site varies from run to run. More
 importantly, you’ve learned the basics of working with futures, so now we can
 dig deeper into what we can do with async.
 
+{{#quiz ../quizzes/async-01-futures-and-syntax.toml}}
+
 [impl-trait]: ch10-02-traits.html#traits-as-parameters
 [iterators-lazy]: ch13-02-iterators.html
 [thread-spawn]: ch16-01-threads.html#creating-a-new-thread-with-spawn
