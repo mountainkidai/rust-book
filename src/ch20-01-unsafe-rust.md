@@ -67,8 +67,8 @@ some abstractions that provide a safe interface to unsafe code.
 
 ### Dereferencing a Raw Pointer
 
-In [“Dangling References”][dangling-references]<!-- ignore --> in Chapter 4, we
-mentioned that the compiler ensures references are always valid. Unsafe Rust has
+In [“The Borrow Checker Finds Permission Violations”][permission-violations]<!-- ignore --> in Chapter 4, we
+described how the compiler ensures references are always valid. Unsafe Rust has
 two new types called _raw pointers_ that are similar to references. As with
 references, raw pointers can be immutable or mutable and are written as `*const
 T` and `*mut T`, respectively. The asterisk isn’t the dereference operator; it’s
@@ -548,7 +548,9 @@ that the code you have written upholds Rust’s rules.
 For a much deeper exploration of how to work effectively with unsafe Rust, read
 Rust’s official guide to the subject, the [Rustonomicon][nomicon].
 
-[dangling-references]: ch04-02-references-and-borrowing.html#dangling-references
+{{#quiz ../quizzes/ch19-01-unsafe-rust.toml}}
+
+[permission-violations]: ch04-02-references-and-borrowing.html#the-borrow-checker-finds-permission-violations
 [ABI]: ../reference/items/external-blocks.html#abi
 [differences-between-variables-and-constants]: ch03-01-variables-and-mutability.html#constants
 [extensible-concurrency-with-the-sync-and-send-traits]: ch16-04-extensible-concurrency-sync-and-send.html#extensible-concurrency-with-the-sync-and-send-traits

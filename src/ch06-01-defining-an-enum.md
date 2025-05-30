@@ -83,8 +83,6 @@ let loopback = IpAddr {
 #}
 ```
 
-</Listing>
-
 Here, we’ve defined a struct `IpAddr` that has two fields: a `kind` field that
 is of type `IpAddrKind` (the enum we defined previously) and an `address` field
 of type `String`. We have two instances of this struct. The first is `home`,

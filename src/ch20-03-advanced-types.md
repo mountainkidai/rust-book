@@ -288,6 +288,8 @@ pointer. In this case, we’ve chosen a reference.
 
 Next, we’ll talk about functions and closures!
 
+{{#quiz ../quizzes/ch19-03-advanced-traits.toml}}
+
 [encapsulation-that-hides-implementation-details]: ch18-01-what-is-oo.html#encapsulation-that-hides-implementation-details
 [string-slices]: ch04-04-slices.html#string-slices
 [the-match-control-flow-operator]: ch06-02-match.html#the-match-control-flow-operator
