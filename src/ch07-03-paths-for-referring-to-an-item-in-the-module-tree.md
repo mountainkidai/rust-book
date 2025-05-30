@@ -68,11 +68,8 @@ each other.
 
 Let’s try to compile Listing 7-3 and find out why it won’t compile yet! The
 errors we get are shown in Listing 7-4.
-<<<<<<< HEAD
-=======
 
 <Listing number="7-4" caption="Compiler errors from building the code in Listing 7-3">
->>>>>>> upstream/main
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-03/output.txt}}
@@ -118,11 +115,8 @@ access to the `add_to_waitlist` function in the child module, so we mark the
 
 Unfortunately, the code in Listing 7-5 still results in compiler errors, as
 shown in Listing 7-6.
-<<<<<<< HEAD
-=======
 
 <Listing number="7-6" caption="Compiler errors from building the code in Listing 7-5">
->>>>>>> upstream/main
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-05/output.txt}}
@@ -185,21 +179,12 @@ interested in this topic, see [The Rust API Guidelines][api-guidelines].
 
 > #### Best Practices for Packages with a Binary and a Library
 >
-<<<<<<< HEAD
-> We mentioned that a package can contain both a *src/main.rs* binary crate
-> root as well as a *src/lib.rs* library crate root, and both crates will have
-> the package name by default. Typically, packages with this pattern of
-> containing both a library and a binary crate will have just enough code in the
-> binary crate to start an executable that calls code within the library crate.
-> This lets other projects benefit from most of the functionality that the
-=======
 > We mentioned that a package can contain both a _src/main.rs_ binary crate
 > root as well as a _src/lib.rs_ library crate root, and both crates will have
 > the package name by default. Typically, packages with this pattern of
 > containing both a library and a binary crate will have just enough code in the
 > binary crate to start an executable that calls code defined in the library
 > crate. This lets other projects benefit from the most functionality that the
->>>>>>> upstream/main
 > package provides because the library crate’s code can be shared.
 >
 > The module tree should be defined in _src/lib.rs_. Then, any public items can
@@ -219,19 +204,11 @@ interested in this topic, see [The Rust API Guidelines][api-guidelines].
 
 We can construct relative paths that begin in the parent module, rather than
 the current module or the crate root, by using `super` at the start of the
-<<<<<<< HEAD
-path. This is like starting a filesystem path with the `..` syntax. Using
-`super` allows us to reference an item that we know is in the parent module,
-which can make rearranging the module tree easier when the module is closely
-related to the parent but the parent might be moved elsewhere in the module
-tree someday.
-=======
 path. This is like starting a filesystem path with the `..` syntax that means
 to go to the parent directory. Using `super` allows us to reference an item
 that we know is in the parent module, which can make rearranging the module
 tree easier when the module is closely related to the parent but the parent
 might be moved elsewhere in the module tree someday.
->>>>>>> upstream/main
 
 Consider the code in Listing 7-8 that models the situation in which a chef
 fixes an incorrect order and personally brings it out to the customer. The

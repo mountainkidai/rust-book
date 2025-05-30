@@ -48,8 +48,6 @@ fn main() {
 }
 ```
 
-</Listing>
-
 To get a specific value from a struct, we use dot notation. For example, to
 access this user’s email address, we use `user1.email`. If the instance is
 mutable, we can change a value by using the dot notation and assigning into a
@@ -74,8 +72,6 @@ fn main() {
     user1.email = String::from("anotheremail@example.com");`[]`
 }
 ```
-
-</Listing>
 
 Note that the entire instance must be mutable; Rust doesn’t allow us to mark
 only certain fields as mutable. As with any expression, we can construct a new
@@ -247,8 +243,6 @@ fn main() {
     let subject = AlwaysEqual;`[]`
 }
 ```
-
-</Listing>
 
 To define `AlwaysEqual`, we use the `struct` keyword, the name we want, and
 then a semicolon. No need for curly brackets or parentheses! Then we can get an
