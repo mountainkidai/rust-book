@@ -666,3 +666,17 @@ Krycho's
 Shriram
 Krishnamurthi
 OOPSLA
+Miri
+miri
+ABIs
+subtasks
+intratask
+handcoded
+SocialPost
+Español
+efdcd
+NoStarch
+repost
+zerocopy
+byteorder
+unicode

@@ -10,21 +10,21 @@ on the order of the data to specify or access the values of an instance.
 To define a struct, we enter the keyword `struct` and name the entire struct. A
 struct’s name should describe the significance of the pieces of data being
 grouped together. Then, inside curly brackets, we define the names and types of
-the pieces of data, which we call *fields*. For example, Listing 5-1 shows a
+the pieces of data, which we call _fields_. For example, Listing 5-1 shows a
 struct that stores information about a user account.
 
-<span class="filename">Filename: src/main.rs</span>
+<Listing number="5-1" file-name="src/main.rs" caption="A `User` struct definition">
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-01/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-1: A `User` struct definition</span>
+</Listing>
 
-To use a struct after we’ve defined it, we create an *instance* of that struct
+To use a struct after we’ve defined it, we create an _instance_ of that struct
 by specifying concrete values for each of the fields. We create an instance by
-stating the name of the struct and then add curly brackets containing *key:
-value* pairs, where the keys are the names of the fields and the values are the
+stating the name of the struct and then add curly brackets containing _`key:
+value`_ pairs, where the keys are the names of the fields and the values are the
 data we want to store in those fields. We don’t have to specify the fields in
 the same order in which we declared them in the struct. In other words, the
 struct definition is like a general template for the type, and instances fill
@@ -47,9 +47,6 @@ fn main() {
     };`[]`
 }
 ```
-
-<span class="caption">Listing 5-2: Creating an instance of the `User`
-struct</span>
 
 To get a specific value from a struct, we use dot notation. For example, to
 access this user’s email address, we use `user1.email`. If the instance is
@@ -76,9 +73,6 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 5-3: Changing the value in the `email` field of a
-`User` instance</span>
-
 Note that the entire instance must be mutable; Rust doesn’t allow us to mark
 only certain fields as mutable. As with any expression, we can construct a new
 instance of the struct as the last expression in the function body to
@@ -88,14 +82,13 @@ Listing 5-4 shows a `build_user` function that returns a `User` instance with
 the given email and username. The `active` field gets the value of `true`, and
 the `sign_in_count` gets a value of `1`.
 
-<span class="filename">Filename: src/main.rs</span>
+<Listing number="5-4" file-name="src/main.rs" caption="A `build_user` function that takes an email and username and returns a `User` instance">
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-04/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-4: A `build_user` function that takes an email
-and username and returns a `User` instance</span>
+</Listing>
 
 It makes sense to name the function parameters with the same name as the struct
 fields, but having to repeat the `email` and `username` field names and
@@ -103,24 +96,23 @@ variables is a bit tedious. If the struct had more fields, repeating each name
 would get even more annoying. Luckily, there’s a convenient shorthand!
 
 <!-- Old heading. Do not remove or links may break. -->
+
 <a id="using-the-field-init-shorthand-when-variables-and-fields-have-the-same-name"></a>
 
 ### Using the Field Init Shorthand
 
 Because the parameter names and the struct field names are exactly the same in
-Listing 5-4, we can use the *field init shorthand* syntax to rewrite
+Listing 5-4, we can use the _field init shorthand_ syntax to rewrite
 `build_user` so it behaves exactly the same but doesn’t have the repetition of
 `username` and `email`, as shown in Listing 5-5.
 
-<span class="filename">Filename: src/main.rs</span>
+<Listing number="5-5" file-name="src/main.rs" caption="A `build_user` function that uses field init shorthand because the `username` and `email` parameters have the same name as struct fields">
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-05/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-5: A `build_user` function that uses field init
-shorthand because the `username` and `email` parameters have the same name as
-struct fields</span>
+</Listing>
 
 Here, we’re creating a new instance of the `User` struct, which has a field
 named `email`. We want to set the `email` field’s value to the value in the
@@ -131,8 +123,8 @@ than `email: email`.
 ### Creating Instances from Other Instances with Struct Update Syntax
 
 It’s often useful to create a new instance of a struct that includes most of
-the values from another instance, but changes some. You can do this using
-*struct update syntax*.
+the values from another instance of the same type, but changes some. You can do
+this using _struct update syntax_.
 
 First, in Listing 5-6 we show how to create a new `User` instance in `user2`
 regularly, without the update syntax. We set a new value for `email` but
@@ -170,15 +162,13 @@ Using struct update syntax, we can achieve the same effect with less code, as
 shown in Listing 5-7. The syntax `..` specifies that the remaining fields not
 explicitly set should have the same value as the fields in the given instance.
 
-<span class="filename">Filename: src/main.rs</span>
+<Listing number="5-7" file-name="src/main.rs" caption="Using struct update syntax to set a new `email` value for a `User` instance but to use the rest of the values from `user1`">
 
 ```rust
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-07/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 5-7: Using struct update syntax to set a new
-`email` value for a `User` instance but to use the rest of the values from
-`user1`</span>
+</Listing>
 
 The code in Listing 5-7 also creates an instance in `user2` that has a
 different value for `email` but has the same values for the `username`,
@@ -199,7 +189,7 @@ types that implement the `Copy` trait, so the behavior we discussed in the
 
 ### Using Tuple Structs Without Named Fields to Create Different Types
 
-Rust also supports structs that look similar to tuples, called *tuple structs*.
+Rust also supports structs that look similar to tuples, called _tuple structs_.
 Tuple structs have the added meaning the struct name provides but don’t have
 names associated with their fields; rather, they just have the types of the
 fields. Tuple structs are useful when you want to give the whole tuple a name
@@ -210,7 +200,7 @@ To define a tuple struct, start with the `struct` keyword and the struct name
 followed by the types in the tuple. For example, here we define and use two
 tuple structs named `Color` and `Point`:
 
-<span class="filename">Filename: src/main.rs</span>
+<Listing file-name="src/main.rs">
 
 ```aquascope,interpreter
 struct Color(i32, i32, i32);
@@ -222,6 +212,8 @@ fn main() {
 }
 ```
 
+</Listing>
+
 Note that the `black` and `origin` values are different types because they’re
 instances of different tuple structs. Each struct you define is its own type,
 even though the fields within the struct might have the same types. For
@@ -229,12 +221,15 @@ example, a function that takes a parameter of type `Color` cannot take a
 `Point` as an argument, even though both types are made up of three `i32`
 values. Otherwise, tuple struct instances are similar to tuples in that you can
 destructure them into their individual pieces, and you can use a `.` followed
-by the index to access an individual value.
+by the index to access an individual value. Unlike tuples, tuple structs
+require you to name the type of the struct when you destructure them. For
+example, we would write `let Point(x, y, z) = origin;` to destructure the
+values in the `origin` point into variables named `x`, `y`, and `z`.
 
 ### Unit-Like Structs Without Any Fields
 
 You can also define structs that don’t have any fields! These are called
-*unit-like structs* because they behave similarly to `()`, the unit type that
+_unit-like structs_ because they behave similarly to `()`, the unit type that
 we mentioned in [“The Tuple Type”][tuples]<!-- ignore --> section. Unit-like
 structs can be useful when you need to implement a trait on some type but don’t
 have any data that you want to store in the type itself. We’ll discuss traits
@@ -267,12 +262,12 @@ implement them on any type, including unit-like structs.
 > that data to be valid for as long as the entire struct is valid.
 >
 > It’s also possible for structs to store references to data owned by something
-> else, but to do so requires the use of *lifetimes*, a Rust feature that we’ll
+> else, but to do so requires the use of _lifetimes_, a Rust feature that we’ll
 > discuss in Chapter 10. Lifetimes ensure that the data referenced by a struct
 > is valid for as long as the struct is. Let’s say you try to store a reference
 > in a struct without specifying lifetimes, like the following; this won’t work:
 >
-> <span class="filename">Filename: src/main.rs</span>
+> <Listing file-name="src/main.rs">
 >
 > <!-- CAN'T EXTRACT SEE https://github.com/rust-lang/mdBook/issues/1127 -->
 >
@@ -293,6 +288,8 @@ implement them on any type, including unit-like structs.
 >     };
 > }
 > ```
+>
+> </Listing>
 >
 > The compiler will complain that it needs lifetime specifiers:
 >
