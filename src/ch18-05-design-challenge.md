@@ -62,7 +62,8 @@ Therefore the requirement as-stated only rules out non-[`Send`] types, and we co
 
 <hr>
 
-Now you try with the questions below! Each section contains a quiz focused on a single scenario. Complete the quiz, and make sure to read the answer context after each quiz. These questions are both experimental and opinionated &mdash; please leave us feedback via the bug button 🐞 if you disagree with our answers.
+Now you try with the questions below! Each section contains a quiz focused on a single scenario. Complete the quiz, and make sure to read the answer context after each quiz.
+ <!-- These questions are both experimental and opinionated &mdash; please leave us feedback via the bug button 🐞 if you disagree with our answers. -->
 
 Along with each quiz, we have also provided links to popular Rust crates that served as inspiration for the quiz.
 
