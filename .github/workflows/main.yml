@@ -9,7 +9,7 @@ on:
 env:
   RUST_LIB_BACKTRACE: 1
   RAYON_NUM_THREADS: 1
-  MDBOOK_QUIZ_VERSION: 0.4.0
+  MDBOOK_QUIZ_VERSION: 0.3.10
   AQUASCOPE_VERSION: 0.3.4
   AQUASCOPE_TOOLCHAIN: nightly-2023-08-25
 
@@ -49,7 +49,7 @@ jobs:
     - name: Install binaries
       run: |
         mkdir bin
-        curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.45/mdbook-v0.4.45-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
+        curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.25/mdbook-v0.4.25-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
         curl -sSL https://github.com/cognitive-engineering-lab/mdbook-quiz/releases/download/v${MDBOOK_QUIZ_VERSION}/mdbook-quiz_x86_64-unknown-linux-gnu_full.tar.gz | tar -xz --directory=bin
         curl -sSL https://github.com/cognitive-engineering-lab/aquascope/releases/download/v${AQUASCOPE_VERSION}/aquascope-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
         patchelf --set-interpreter /lib64/ld-linux-x86-64.so.2 bin/mdbook-aquascope bin/cargo-aquascope bin/aquascope-driver
