@@ -1,0 +1,460 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Ownership Recap - The Rust Programming Language</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="ferris.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
+        <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="js-extensions/packages/consent-form/dist/index.css">
+        <link rel="stylesheet" href="js-extensions/packages/feedback/dist/index.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/cognitive-engineering-lab/rust-book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="ownership-recap"><a class="header" href="#ownership-recap">Ownership Recap</a></h2>
+<p>This chapter introduced a lot of new concepts like ownership, borrowing, and slices.
+If you aren't familiar with systems programming, this chapter also introduced new concepts like memory allocation, the stack vs. the heap, pointers, and undefined behavior. Before we move on to the rest of Rust, let's first stop and take a breath. We'll review and practice with the key concepts from this chapter.</p>
+<h3 id="ownership-versus-garbage-collection"><a class="header" href="#ownership-versus-garbage-collection">Ownership versus Garbage Collection</a></h3>
+<p>To put ownership into context, we should talk about <strong>garbage collection</strong>.
+Most programming languages use a garbage collector to manage memory, such as in Python, Javascript, Java, and Go. A garbage collector works at runtime adjacent to a running program (a tracing collector, at least). The collector scans through memory to find data that's no longer used — that is, the running program can no longer reach that data from a function-local variable. Then the collector deallocates the unused memory for later use.</p>
+<p>The key benefit of a garbage collector is that it avoids undefined behavior (such as using freed memory), as can happen in C or C++. Garbage collection also avoids the need for a complex type system to check for undefined behavior, like in Rust. However, there are a few drawbacks to garbage collection. One obvious drawback is performance, as garbage collection incurs either frequent small overheads (for reference-counting, like in Python and Swift) or infrequent large overheads (for tracing, like in all other GC'd languages).</p>
+<p>But another less obvious drawback is that <strong>garbage collection can be unpredictable</strong>. To illustrate the point, say we are implementing a <code>Document</code> type that represents a mutable list of words. We could implement <code>Document</code> in a garbage-collected language such as Python in this way:</p>
+<pre><code class="language-python">class Document:     
+    def __init__(self, words: List[str]):
+        """Create a new document"""
+        self.words = words
+
+    def add_word(self, word: str):
+        """Add a word to the document"""
+        self.words.append(word)
+        
+    def get_words(self) -&gt; List[str]:  
+        """Get a list of all the words in the document"""
+        return self.words
+</code></pre>
+<p>Here's one way we could use this <code>Document</code> class that creates a document <code>d</code>, copies it into a new document <code>d2</code>, and then mutates <code>d2</code>.</p>
+<pre><code class="language-python">words = ["Hello"]
+d = Document(words)
+
+d2 = Document(d.get_words())
+d2.add_word("world")
+</code></pre>
+<p>Consider two key questions about this example:</p>
+<ol>
+<li>
+<p><strong>When is the words array deallocated?</strong>
+This program has created three pointers to the same array. The variables <code>words</code>, <code>d</code>, and <code>d2</code> all contain a pointer to the words array allocated on the heap. Therefore Python will only deallocate the words array when all three variables are out of scope. More generally, it's often difficult to predict where data will be garbage-collected just by reading the source code.</p>
+</li>
+<li>
+<p><strong>What are the contents of the document <code>d</code>?</strong>
+Because <code>d2</code> contains a pointer to the same words array as <code>d</code>, then <code>d2.add_word("world")</code> also mutates the document <code>d</code>. Therefore in this example, the words in <code>d</code> are <code>["Hello", "world"]</code>. This happens because <code>d.get_words()</code> returns a mutable reference to the words array in <code>d</code>. Pervasive, implicit mutable references can easily lead to unpredictable bugs when data structures can leak their internals<sup class="footnote-reference" id="fr-ownership-originally-1"><a href="#footnote-ownership-originally">1</a></sup>. Here, it is probably not intended behavior that a change to <code>d2</code> can change <code>d</code>.</p>
+</li>
+</ol>
+<p>This problem is not unique to Python — you can encounter similar behavior in C#, Java, Javascript, and so on. In fact, most programming languages actually have a concept of pointers. It's just a question of how the language exposes pointers to the programmer. Garbage collection makes it difficult to see which variable points to which data. For example, it wasn't obvious that <code>d.get_words()</code> produced a pointer to data within <code>d</code>.</p>
+<p>By contrast, Rust's ownership model puts pointers front-and-center. We can see that by translating the <code>Document</code> type into a Rust data structure. Normally we would use a <code>struct</code>, but we haven't covered those yet, so we'll just use a type alias:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>type Document = Vec&lt;String&gt;;
+
+fn new_document(words: Vec&lt;String&gt;) -&gt; Document {
+    words
+}
+
+fn add_word(this: &amp;mut Document, word: String) {
+    this.push(word);
+}
+
+fn get_words(this: &amp;Document) -&gt; &amp;[String] {
+    this.as_slice()
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This Rust API differs from the Python API in a few key ways:</p>
+<ul>
+<li>
+<p>The function <code>new_document</code> consumes ownership of the input vector <code>words</code>. That means the <code>Document</code> <em>owns</em> the word vector. The word vector will be predictably deallocated when its owning <code>Document</code> goes out of scope.</p>
+</li>
+<li>
+<p>The function <code>add_word</code> requires a mutable reference <code>&amp;mut Document</code> to be able to mutate a document. It also consumes ownership of the input <code>word</code>, meaning no one else can mutate the individual words of the document.</p>
+</li>
+<li>
+<p>The function <code>get_words</code> returns an explicit immutable reference to strings within the document. The only way to create a new document from this word vector is to deep-copy its contents, like this:</p>
+</li>
+</ul>
+<pre><code class="language-rust ignore">fn main() {
+    let words = vec!["hello".to_string()];
+    let d = new_document(words);
+
+    // .to_vec() converts &amp;[String] to Vec&lt;String&gt; by cloning each string
+    let words_copy = get_words(&amp;d).to_vec();
+    let mut d2 = new_document(words_copy);
+    add_word(&amp;mut d2, "world".to_string());
+
+    // The modification to `d2` does not affect `d`
+    assert!(!get_words(&amp;d).contains(&amp;"world".into()));
+}</code></pre>
+<p>The point of this example is to say: if Rust is not your first language, then you already have experience working with memory and pointers! Rust just makes those concepts explicit. This has the dual benefit of (1) improving runtime performance by avoiding garbage collection, and (2) improving predictability by preventing accidental "leaks" of data.</p>
+<h3 id="the-concepts-of-ownership"><a class="header" href="#the-concepts-of-ownership">The Concepts of Ownership</a></h3>
+<p>Next, let's review the concepts of ownership. This review will be quick — the goal is to remind you of the relevant concepts. If you realize you forgot or didn't understand a concept, then we will link you to the relevant chapters which you can review.</p>
+<h4 id="ownership-at-runtime"><a class="header" href="#ownership-at-runtime">Ownership at Runtime</a></h4>
+<p>We'll start by reviewing how Rust uses memory at runtime:</p>
+<ul>
+<li>Rust allocates local variables in stack frames, which are allocated when a function is called and deallocated when the call ends.</li>
+<li>Local variables can hold either data (like numbers, booleans, tuples, etc.) or pointers.</li>
+<li>Pointers can be created either through boxes (pointers owning data on the heap) or references (non-owning pointers).</li>
+</ul>
+<p>This diagram illustrates how each concept looks at runtime:</p>
+<pre><code class="language-aquascope interpreter horizontal">fn main() {
+  let mut a_num = 0;
+  inner(&amp;mut a_num);`[]`
+}
+
+fn inner(x: &amp;mut i32) {
+  let another_num = 1;
+  let a_stack_ref = &amp;another_num;
+
+  let a_box = Box::new(2);  
+  let a_box_stack_ref = &amp;a_box;
+  let a_box_heap_ref = &amp;*a_box;`[]`
+
+  *x += 5;
+}
+</code></pre>
+<p>Review this diagram and make sure you understand each part. For example, you should be able to answer:</p>
+<ul>
+<li>Why does <code>a_box_stack_ref</code> point to the stack, while <code>a_box_heap_ref</code> point to the heap?</li>
+<li>Why is the value <code>2</code> no longer on the heap at L2?</li>
+<li>Why does <code>a_num</code> have the value <code>5</code> at L2?</li>
+</ul>
+<p>If you want to review boxes, re-read <a href="ch04-01-what-is-ownership.html">Chapter 4.1</a>. If you want to review references, re-read <a href="ch04-02-references-and-borrowing.html">Chapter 4.2</a>. If you want to see case studies involving boxes and references, re-read <a href="ch04-03-fixing-ownership-errors.html">Chapter 4.3</a>.</p>
+<p>Slices are a special kind of reference that refer to a contiguous sequence of data in memory. This diagram illustrates how a slice refers to a subsequence of characters in a string:</p>
+<pre><code class="language-aquascope interpreter">fn main() {
+  let s = String::from("abcdefg");
+  let s_slice = &amp;s[2..5];`[]`
+}
+</code></pre>
+<p>If you want to review slices, re-read <a href="ch04-04-slices.html">Chapter 4.4</a>.</p>
+<h4 id="ownership-at-compile-time"><a class="header" href="#ownership-at-compile-time">Ownership at Compile-time</a></h4>
+<p>Rust tracks @Perm{read} (read), @Perm{write} (write), and @Perm{own} (own) permissions on each variable. Rust requires that a variable has appropriate permissions to perform a given operation. As a basic example, if a variable is not declared as <code>let mut</code>, then it is missing the @Perm{write} permission and cannot be mutated:</p>
+<pre><code class="language-aquascope permissions stepper boundaries shouldFail">fn main() {
+  let n = 0;
+  n += 1;
+}
+</code></pre>
+<p>A variable's permissions can be changed if it is <strong>moved</strong> or <strong>borrowed</strong>. A move of a variable with a non-copyable type (like <code>Box&lt;T&gt;</code> or <code>String</code>) requires the @Perm{read}@Perm{own} permissions, and the move eliminates all permissions on the variable. That rule prevents the use of moved variables:</p>
+<pre><code class="language-aquascope permissions stepper boundaries shouldFail">fn main() {
+  let s = String::from("Hello world");
+  consume_a_string(s);
+  println!("{s}"); // can't read `s` after moving it
+}
+
+fn consume_a_string(_s: String) {
+  // om nom nom
+}
+</code></pre>
+<p>If you want to review how moves work, re-read <a href="ch04-01-what-is-ownership.html">Chapter 4.1</a>.</p>
+<p>Borrowing a variable (creating a reference to it) temporarily removes some of the variable's permissions. An immutable borrow creates an immutable reference, and also disables the borrowed data from being mutated or moved. For example, printing an immutable reference is ok:</p>
+<pre><code class="language-aquascope permissions stepper boundaries">#fn main() {
+let mut s = String::from("Hello");
+let s_ref = &amp;s;
+println!("{s_ref}");
+println!("{s}");
+#}
+</code></pre>
+<p>But mutating an immutable reference is not ok:</p>
+<pre><code class="language-aquascope permissions stepper boundaries shouldFail">#fn main() {
+let mut s = String::from("Hello");
+let s_ref = &amp;s;`(focus,paths:*s_ref)`
+s_ref.push_str(" world");
+println!("{s}");
+#}
+</code></pre>
+<p>And mutating the immutably borrowed data is not ok:</p>
+<pre><code class="language-aquascope permissions stepper boundaries shouldFail">#fn main() {
+let mut s = String::from("Hello");`(focus)`
+let s_ref = &amp;s;`(focus,rxpaths:s$)`
+s.push_str(" world");
+println!("{s_ref}");
+#}
+</code></pre>
+<p>And moving data out of the reference is not ok:</p>
+<pre><code class="language-aquascope permissions stepper boundaries shouldFail">#fn main() {
+let mut s = String::from("Hello");
+let s_ref = &amp;s;`(focus,paths:*s_ref)`
+let s2 = *s_ref;
+println!("{s}");
+#}
+</code></pre>
+<p>A mutable borrow creates a mutable reference, which disables the borrowed data from being read, written, or moved. For example, mutating a mutable reference is ok:</p>
+<pre><code class="language-aquascope permissions stepper boundaries">#fn main() {
+let mut s = String::from("Hello");
+let s_ref = &amp;mut s;
+s_ref.push_str(" world");
+println!("{s}");
+#}
+</code></pre>
+<p>But accessing the mutably borrowed data is not ok:</p>
+<pre><code class="language-aquascope permissions stepper boundaries shouldFail">#fn main() {
+let mut s = String::from("Hello");
+let s_ref = &amp;mut s;`(focus,rxpaths:s$)`
+println!("{s}");
+s_ref.push_str(" world");
+#}
+</code></pre>
+<p>If you want to review permissions and references, re-read <a href="ch04-02-references-and-borrowing.html">Chapter 4.2</a>.</p>
+<h4 id="connecting-ownership-between-compile-time-and-runtime"><a class="header" href="#connecting-ownership-between-compile-time-and-runtime">Connecting Ownership between Compile-time and Runtime</a></h4>
+<p>Rust's permissions are designed to prevent undefined behavior. For example, one kind of undefined behavior is a <strong>use-after-free</strong> where freed memory is read or written. Immutable borrows remove the @Perm{write} permission to avoid use-after-free, like in this case:</p>
+<pre><code class="language-aquascope interpreter shouldFail horizontal">#fn main() {
+let mut v = vec![1, 2, 3];
+let n = &amp;v[0];`[]`
+v.push(4);`[]`
+println!("{n}");`[]`
+#}
+</code></pre>
+<p>Another kind of undefined behavior is a <strong>double-free</strong> where memory is freed twice. Dereferences of references to non-copyable data do not have the @Perm{own} permission to avoid double-frees, like in this case:</p>
+<pre><code class="language-aquascope interpreter shouldFail horizontal">#fn main() {
+let v = vec![1, 2, 3];
+let v_ref: &amp;Vec&lt;i32&gt; = &amp;v;
+let v2 = *v_ref;`[]`
+drop(v2);`[]`
+drop(v);`[]`
+#}
+</code></pre>
+<p>If you want to review undefined behavior, re-read <a href="ch04-01-what-is-ownership.html">Chapter 4.1</a> and <a href="ch04-03-fixing-ownership-errors.html">Chapter 4.3</a>.</p>
+<h3 id="the-rest-of-ownership"><a class="header" href="#the-rest-of-ownership">The Rest of Ownership</a></h3>
+<p>As we introduce additional features like structs, enums, and traits, those features will have specific interactions with ownership. This chapter provides the essential foundation for understanding those interactions — the concepts of memory, pointers, undefined behavior, and permissions will help us talk about the more advanced parts of Rust in future chapters.</p>
+<p>And don't forget to take the quizzes if you want to check your understanding!</p>
+<div class="quiz-placeholder" data-quiz-name="&quot;ch04-05-ownership-recap&quot;" data-quiz-questions="{&quot;questions&quot;:[{&quot;context&quot;:&quot;The spec calls for the input to be mutated in-place, therefore the most appropriate type signature accepts a mutable reference to the input.\nAn immutable reference or an owned vector are both inappropriate for this spec.\n&quot;,&quot;id&quot;:&quot;1ec0098c-c5dc-46de-a889-b6659c0af757&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;```\nfn round_all(v: &amp;mut Vec&lt;f32&gt;);\n```\n&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;```\nfn round_all(v: &amp;Vec&lt;f32&gt;) -&gt; Vec&lt;f32&gt;;\n```\n&quot;,&quot;```\nfn round_all(v: Vec&lt;f32&gt;);\n```\n&quot;,&quot;```\nfn round_all(v: &amp;Vec&lt;f32&gt;);\n```\n&quot;],&quot;prompt&quot;:&quot;Say you are writing a function with the following spec:\n\n&gt; `round_all` takes as input a list of floating point numbers, and it rounds each number in-place to the nearest integer.\n\nWhich of the following is the most appropriate type signature for a function implementing this spec?\n&quot;}},{&quot;context&quot;:&quot;For `haystack`, the slice type `&amp;[String]` can accept more inputs than `&amp;Vec&lt;String&gt;`, so it is preferred.\nFor `needle`, the target substring does not need to be heap-allocated, so `&amp;str` is preferred to `String`.\nFor the return type, `Vec&lt;String&gt;` is not desirable because it would require cloning the input strings.\n`&amp;[String]` is not desirable because it can only return a contiguous subsequence of the input.\n`Vec&lt;&amp;String&gt;` is the most preferable because it only incurs the cost of allocating the vector, not the strings themselves.\n&quot;,&quot;id&quot;:&quot;f8ca5ab2-0e5d-4c0d-bca2-99e6763ba9c5&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;```\nfn find_contains(haystack: &amp;[String], needle: &amp;str) -&gt; Vec&lt;&amp;String&gt;;\n```\n&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;```\nfn find_contains(haystack: &amp;Vec&lt;String&gt;, needle: String) -&gt; Vec&lt;String&gt;;\n```\n&quot;,&quot;```\nfn find_contains(haystack: &amp;[String], needle: &amp;str) -&gt; Vec&lt;String&gt;;\n```\n&quot;,&quot;```\nfn find_contains(haystack: &amp;Vec&lt;String&gt;, needle: &amp;str) -&gt; &amp;[String];\n```\n&quot;],&quot;prompt&quot;:&quot;Say you are writing a function with the following spec:\n\n&gt; `find_contains` takes as input a collection of strings and a target substring. \n&gt; It returns a list of all the strings in the collection that contain the target substring.\n\nWhich of the following is the most appropriate type signature for a function implementing this spec?\n&quot;}},{&quot;context&quot;:&quot;As discussed in [Chapter 4.3 \&quot;Fixing a Safe Program: Mutating Different Array Elements\&quot;](ch04-03-fixing-ownership-errors.html#fixing-a-safe-program-mutating-different-array-elements), functions like `split_at_mut` are implemented with the `unsafe` feature.\nThis feature doesn't completely disable the borrow checker, but rather enables the use of specific unsafe features like raw pointers.\n&quot;,&quot;id&quot;:&quot;868a4edf-16f0-4191-8aed-835c812b8b25&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;`split_at_mut` uses unsafe code to circumvent the borrow checker with raw pointers&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;`split_at_mut` is a special compiler primitive that cannot be implemented within the language&quot;,&quot;`split_at_mut` uses unsafe code to disable the borrow checker from checking the safety of mutable references&quot;,&quot;`split_at_mut` calls into a C library that can't be analyzed by Rust&quot;],&quot;prompt&quot;:&quot;Rust normally disallows multiple mutable accesses to the same array, even when those accesses are disjoint. \nFor example, this function does not compile:\n\n```\nfn main() {\n  let mut v = vec![0, 1, 2, 3];\n  let (r0, r1) = (&amp;mut v[0..2], &amp;mut v[2..4]);\n  r0[0] += 1;\n  r1[0] += 1;  \n}\n```\n\nHowever, the Rust standard library has a function `slice::split_at_mut` that does permit this functionality:\n\n```\nfn main() {\n  let mut v = vec![0, 1, 2, 3];\n  let (r0, r1) = v.split_at_mut(2);\n  r0[0] += 1;\n  r1[0] += 1;  \n}\n```\n\nWhich of the following best describes how it's possible to implement `split_at_mut`?\n&quot;}},{&quot;context&quot;:&quot;The @Perm{own} permission represents ownership of an object. There can only exist one owner of an object, so it is important\nthat references cannot transfer ownership of non-copyable types like `String`. If two variables thought they owned\nthe same string, then they would both attempt to deallocate it, causing a double-free.\n&quot;,&quot;id&quot;:&quot;ba32e57a-e5f2-42e4-8cfd-eb265990c690&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;Ownership permits moving, and moving out of a reference can cause a double-free&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;Ownership permits borrowing, and reborrowing `*s_ref` can cause a double-free&quot;,&quot;Ownership permits mutation, and mutating `*s_ref` can cause a use-after-free&quot;,&quot;Ownership permits reading, and reading `*s_ref` can cause a use-after-free&quot;],&quot;prompt&quot;:&quot;Consider the permissions in the following program:\n\n```aquascope,permissions,boundaries,stepper\n#fn main() {\nlet s = String::new();\nlet s_ref = &amp;s;`(focus,paths:*s_ref)`\n#println!(\&quot;{s_ref}\&quot;);\n#}\n```\n\nWhich of the following best explains why `*s_ref` does not have the @Perm{own} (own) permission?\n&quot;}},{&quot;context&quot;:&quot;The borrow checker always rejects programs with undefined behavior, but may sometimes reject programs without undefined behavior (i.e., are perfectly safe).\nIn technical terms, the borrow checker is a sound and incomplete analysis.\n&quot;,&quot;id&quot;:&quot;3a5f5de5-23a9-49fb-bdb4-acc9c3fbb4a6&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:[&quot;The borrow checker always rejects programs with undefined behavior&quot;,&quot;The borrow checker sometimes rejects programs without undefined behavior&quot;]},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;The borrow checker always accepts programs without undefined behavior&quot;,&quot;The borrow checker sometimes accepts programs with undefined behavior&quot;],&quot;prompt&quot;:&quot;Consider the set of Rust programs that contain no `unsafe` code. \nSelect each of the following statements that is true about the kinds of programs accepted and rejected by the borrow checker:\n&quot;}},{&quot;context&quot;:&quot;This function would cause a double-free on any input.\n&quot;,&quot;id&quot;:&quot;208e0e38-a706-4d96-9809-f0e12f574136&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;This function COULD cause undefined behavior&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;This function could NOT cause undefined behavior&quot;],&quot;prompt&quot;:&quot;The function `extract` is rejected by the borrow checker:\n\n```rust\nfn extract(b: &amp;Box&lt;i32&gt;) -&gt; i32 {\n    let b2: Box&lt;i32&gt; = *b;\n    *b2\n}\n```\n\nImagine that the borrow checker did not reject this function. \nDetermine whether there exists an input such that the function would cause undefined behavior if executed on that input.\n&quot;}},{&quot;context&quot;:&quot;The borrow checker rejects this function because it assumes that `get_first` and `get_second` could return a mutable\nreference to either component of the tuple, and so `fst` and `snd` could possibly point to the same value. But they are\nalways distinct in this program, so this function is actually safe.\n&quot;,&quot;id&quot;:&quot;dcfd54f8-7fe6-4483-aefd-ea95ba5b5eb0&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;This function could NOT cause undefined behavior&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;This function COULD cause undefined behavior&quot;],&quot;prompt&quot;:&quot;The function `transfer_string` is rejected by the borrow checker:\n\n```rust\nfn get_first(strs: &amp;mut (String, String)) -&gt; &amp;mut String {\n    &amp;mut strs.0\n}\n\nfn get_second(strs: &amp;mut (String, String)) -&gt; &amp;mut String {\n    &amp;mut strs.1\n}\n\nfn transfer_string(strs: &amp;mut (String, String)) {\n    let fst = get_first(strs);\n    let snd = get_second(strs);\n    fst.push_str(snd);\n    snd.clear();\n}\n```\n\nImagine that the borrow checker did not reject this function. \nDetermine whether there exists an input such that the function would cause undefined behavior if executed on that input.\n&quot;}}]}" data-quiz-fullscreen="true" data-quiz-cache-answers="true"></div>
+<script type="text/javascript" src="quiz/quiz-embed.iife.js"></script><link rel="stylesheet" type="text/css" href="quiz/style.css"><hr>
+<ol class="footnote-definition"><li id="footnote-ownership-originally">
+<p>In fact, the original invention of ownership types wasn't about memory safety at all. It was about preventing leaks of mutable references to data structure internals in Java-like languages. If you're curious to learn more about the history of ownership types, check out the paper <a href="https://dl.acm.org/doi/abs/10.1145/286936.286947">"Ownership Types for Flexible Alias Protection"</a> (Clarke et al. 1998). <a href="#fr-ownership-originally-1">↩</a></p>
+</li>
+</ol>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch04-04-slices.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch05-00-structs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch04-04-slices.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch05-00-structs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="ferris.js"></script>
+        <script src="js-extensions/packages/telemetry/dist/index.js"></script>
+        <script src="js-extensions/packages/consent-form/dist/index.js"></script>
+        <script src="js-extensions/packages/feedback/dist/index.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
