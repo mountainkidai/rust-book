@@ -33,7 +33,7 @@
         <link rel="stylesheet" href="theme/semantic-notes.css">
         <link rel="stylesheet" href="theme/listing.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
-        <link rel="stylesheet" href="js-extensions/packages/consent-form/dist/index.css">
+        <link rel="stylesheet" href="js-extensions/packages/feedback/dist/index.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -941,6 +941,22 @@ Rust uses to make async work.</p>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
@@ -960,6 +976,7 @@ Rust uses to make async work.</p>
         <!-- Custom JS scripts -->
         <script src="ferris.js"></script>
         <script src="js-extensions/packages/telemetry/dist/index.js"></script>
+        <script src="js-extensions/packages/feedback/dist/index.js"></script>
 
 
 
