@@ -1,33 +1,5 @@
-name: Build and Deploy Rust Book
-
-on:
-  push:
-    branches:
-      - main
-  schedule:
-    - cron: "0 2 * * 1" # Build every Monday 2AM UTC
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Rust nightly toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly-2024-12-15
-          override: true
-
-      - name: Install mdBook
-        run: cargo install mdbook --locked
-
-      - name: Build mdBook
-        run: mdbook build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./book/
+- name: Deploy to GitHub Pages
+  uses: peaceiris/actions-gh-pages@v3
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    publish_dir: ./book # This means deploy the contents of 'book' folder
