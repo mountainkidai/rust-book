@@ -1,6 +1,10 @@
-# rfSE Club Rust Learning Experiment
+# rfSE Club - rust Playground
 
-Welcome to the rfSE Club's interactive Rust learning experiment! This presentation is a customized edition of [_The Rust Programming Language_](https://doc.rust-lang.org/book/) adapted to fit our club's learner-centric approach. Our goal is to make Rust more accessible and engaging for developers at all levels.
+Welcome to the rust Playground! This presentation is a customized edition of [_The Rust Programming Language_](https://doc.rust-lang.org/book/) adapted to fit our club's first-principles centric approach. Our goal is to make rust more accessible for everyone.
+
+## Note
+
+incase you want a quick recap, we would recommend you to go through rfSE Docs - Programming/rust/concepts. But if you want to learn from basics, stick to rust Playground.
 
 ## 1. Interactive Quizzes
 
