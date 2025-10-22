@@ -37,16 +37,16 @@ $ cargo install mdbook --locked --version <version_num>
 
 This fork also requires a few mdBook preprocessors to support our experimental extensions. Follow the installation instructions at each link below.
 
-* `mdbook-aquascope`: <https://github.com/cognitive-engineering-lab/aquascope#installation>
-* `mdbook-quiz`: <https://github.com/cognitive-engineering-lab/mdbook-quiz#installation>
+- `mdbook-aquascope`: <https://github.com/cognitive-engineering-lab/aquascope#installation>
+- `mdbook-quiz`: <https://github.com/cognitive-engineering-lab/mdbook-quiz#installation>
 
-You should install the same version of each preprocessor [used in CI](https://github.com/cognitive-engineering-lab/rust-book/blob/main/.github/workflows/main.yml).
+You should install the same version of each preprocessor [used in CI](http://github.com/mountainkidai/rust-book//blob/main/.github/workflows/main.yml).
 
 Finally, you need [pnpm](https://pnpm.io/installation).
 
 The book also uses two mdbook plugins which are part of this repository. If you
 do not install them, you will see warnings when building and the output will not
-look right, but you *will* still be able to build the book. To use the plugins,
+look right, but you _will_ still be able to build the book. To use the plugins,
 you should run:
 
 ```bash
@@ -86,6 +86,7 @@ The output will be in the `book` subdirectory. To check it out, open it in
 your web browser.
 
 _Firefox:_
+
 ```bash
 $ firefox book/index.html                       # Linux
 $ open -a "Firefox" book/index.html             # OS X
@@ -94,6 +95,7 @@ $ start firefox.exe .\book\index.html           # Windows (Cmd)
 ```
 
 _Chrome:_
+
 ```bash
 $ google-chrome book/index.html                 # Linux
 $ open -a "Google Chrome" book/index.html       # OS X
